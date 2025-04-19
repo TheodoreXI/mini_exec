@@ -57,7 +57,7 @@ void    ft_cd(char **s, t_env *h)
     OLD_PWD = ft_lstnew("OLDPWD", NULL);
     if (s[1] == NULL)
     {
-        path = getenv("HOME");
+        path = getenv("HOME");//this one should change khoya 
         if (path == NULL)
         {
             write(2, "minishell: cd: HOME not set", 28);

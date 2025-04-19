@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: makkach <makkach@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aakroud <aakroud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 19:44:26 by makkach           #+#    #+#             */
-/*   Updated: 2025/03/16 12:47:27 by makkach          ###   ########.fr       */
+/*   Created: 2024/12/09 11:41:37 by aakroud           #+#    #+#             */
+/*   Updated: 2025/03/23 20:08:11 by aakroud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "get_next_line_bonus.h"
 
-char	*ft_strdup(char *s1)
+char	*ft_strchr(const char *s, int c)
 {
-	int		i;
-	char	*j;
+	int				i;
+	char			p;
 
+	p = (char)c;
 	i = 0;
-	while (s1[i] != '\0')
-		i++;
-	i += 1;
-	j = (char *)malloc(i * sizeof(char));
-	if (!j)
-		return (0);
-	i = 0;
-	while (s1[i] != '\0')
+	if (s == NULL)
+		return (NULL);
+	while (s[i] != '\0')
 	{
-		j[i] = s1[i];
+		if (s[i] == p)
+			return ((char *)&s[i]);
 		i++;
 	}
-	j[i] = '\0';
-	return (j);
+	if (s[i] == p)
+		return ((char *)&s[i]);
+	return (NULL);
 }

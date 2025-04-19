@@ -1,59 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aakroud <aakroud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/21 23:24:35 by aakroud           #+#    #+#             */
-/*   Updated: 2025/03/24 22:18:22 by aakroud          ###   ########.fr       */
+/*   Created: 2025/03/21 22:22:59 by aakroud           #+#    #+#             */
+/*   Updated: 2025/04/19 17:54:19 by aakroud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-void	ft_cmd_exit(char *str)
-{
-	write(2, "pipex: command not found: ", 27);
-	write(2, str, ft_strlen(str));
-	write(2, "\n", 1);
-}
-
-char	*ft_find_str(char **env)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	while (env[i] != NULL)
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			str = ft_substr(env[i], 5, 57);
-			return (str);
-		}
-		i++;
-	}
-	return (env[i]);
-}
-
-char	*ft_strmcpy(char *src)
-{
-	char	*dest;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	dest = malloc(ft_strlen(src) + 2);
-	if (!dest)
-		return (NULL);
-	dest[j++] = '/';
-	while (src[i])
-		dest[j++] = src[i++];
-	dest[j] = '\0';
-	return (dest);
-}
+#include "pipex_bonus.h"
 
 void	ft_cmd_helper(t_cmd *com, int i, char *env, char *s)
 {
@@ -102,4 +59,31 @@ char	*ft_cmd_check(char *env, char *s)
 	}
 	ft_cmd_helper(&com, 1, env, s);
 	return (NULL);
+}
+
+int	ft_file_check(char *str)
+{
+	int	fd;
+
+	fd = open(str, O_RDONLY);
+	return (fd);
+}
+
+int	ft_file_create(char *str, char *argv)
+{
+	int	fd;
+
+	if (ft_strcmp("here_doc", argv) == 0)
+		fd = open(str, O_RDWR | O_APPEND | O_CREAT, 0644);
+	else
+		fd = open(str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	return (fd);
+}
+
+void	ft_handle_exit(char *str)
+{
+	write(2, "pipex: no such file or directory: ", 34);
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
+	exit (1);
 }
